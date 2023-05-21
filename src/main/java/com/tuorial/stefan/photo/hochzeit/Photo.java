@@ -1,8 +1,12 @@
 package com.tuorial.stefan.photo.hochzeit;
 
+import jakarta.validation.constraints.NotEmpty;
+import org.springframework.lang.NonNull;
+
 public class Photo {
 
     private String id;
+    @NotEmpty
     private String fileName;
 
     public Photo() {
@@ -25,5 +29,7 @@ public class Photo {
         this.id = id;
     }
 
-
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 }

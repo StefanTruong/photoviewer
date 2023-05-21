@@ -1,6 +1,7 @@
 package com.tuorial.stefan.photo.hochzeit;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -51,10 +52,10 @@ public class PhotozController {
     }
 
     @PostMapping("/photo/")
-    public Photo create(@RequestBody Photo photo){
+    public Photo create(@RequestBody @Validated Photo photo){
         /*
         (async function createPhoto() {
-          let photo = {"filename": "post.jpg"};
+          let photo = {"fileName": "post.jpg"};
 
           await fetch("http://localhost:8080/photo/", {
                     method: "POST",
@@ -70,6 +71,7 @@ public class PhotozController {
          */
 
         photo.setId(UUID.randomUUID().toString());
+        System.out.println("Hallo" + photo.getClass().getName());
         db.put(photo.getId(), photo);
 
         return photo;
