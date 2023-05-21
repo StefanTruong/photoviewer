@@ -1,16 +1,10 @@
 package com.tuorial.stefan.photo.hochzeit;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class PhotozController {
@@ -27,7 +21,7 @@ public class PhotozController {
         return "Hello World";
     }
 
-    @GetMapping("/photo")
+    @GetMapping("/photo/")
     public Collection<Photo> get(){
         return db_new.values();
     }
@@ -47,12 +41,39 @@ public class PhotozController {
         /*
         To execute a delete call from a browser use the console of the browser.
         (async function deletePhoto(id) {
-            await fetch('http://localhost:8080/photo/' + id, {method: 'DELETE'})
-        })("1");
+          await fetch("http://localhost:8080/photo/" + id, {method: "DELETE"})
+          })("1")
          */
         Photo photo = db_new.remove(id);
         if(photo == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PostMapping("/photo/")
+    public Photo create(@RequestBody Photo photo){
+        /*
+        (async function createPhoto() {
+          let photo = {"filename": "post.jpg"};
+
+          await fetch("http://localhost:8080/photo", {
+                    method: "POST",
+                    headers: {
+                              "Accept": "application/json",
+                              "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(photo)
+                    })
+                    .then(result => result.text())
+                    .then(text => alert(text));
+        })();
+         */
+
+        photo.setId(UUID.randomUUID().toString());
+        db_new.put(photo.getId(), photo);
+
+        return photo;
+    }
+
+
 }
