@@ -9,7 +9,7 @@ import java.util.*;
 @RestController
 public class PhotozController {
 
-    private Map<String, Photo> db_new = new HashMap<>(){{
+    private Map<String, Photo> db = new HashMap<>(){{
         put("1", new Photo("1", "photo1.jpg"));
     }};
 
@@ -23,12 +23,12 @@ public class PhotozController {
 
     @GetMapping("/photo/")
     public Collection<Photo> get(){
-        return db_new.values();
+        return db.values();
     }
 
     @GetMapping("/photo/{id}")
     public Photo get(@PathVariable String id){
-        Photo photo = db_new.get(id);
+        Photo photo = db.get(id);
         if(photo == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -44,7 +44,7 @@ public class PhotozController {
           await fetch("http://localhost:8080/photo/" + id, {method: "DELETE"})
           })("1")
          */
-        Photo photo = db_new.remove(id);
+        Photo photo = db.remove(id);
         if(photo == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -56,7 +56,7 @@ public class PhotozController {
         (async function createPhoto() {
           let photo = {"filename": "post.jpg"};
 
-          await fetch("http://localhost:8080/photo", {
+          await fetch("http://localhost:8080/photo/", {
                     method: "POST",
                     headers: {
                               "Accept": "application/json",
@@ -70,7 +70,7 @@ public class PhotozController {
          */
 
         photo.setId(UUID.randomUUID().toString());
-        db_new.put(photo.getId(), photo);
+        db.put(photo.getId(), photo);
 
         return photo;
     }
