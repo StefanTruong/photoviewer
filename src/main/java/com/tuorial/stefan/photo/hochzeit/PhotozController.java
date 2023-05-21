@@ -3,8 +3,10 @@ package com.tuorial.stefan.photo.hochzeit;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -51,7 +53,7 @@ public class PhotozController {
         }
     }
 
-    @PostMapping("/photo/")
+    @PostMapping("/photoOld/")
     public Photo create(@RequestBody @Validated Photo photo){
         /*
         (async function createPhoto() {
@@ -74,6 +76,16 @@ public class PhotozController {
         System.out.println("Hallo" + photo.getClass().getName());
         db.put(photo.getId(), photo);
 
+        return photo;
+    }
+
+    @PostMapping("/photo/")
+    public Photo create(@RequestPart("data") MultipartFile file) throws IOException {
+        Photo photo = new Photo();
+        photo.setId(UUID.randomUUID().toString());
+        photo.setFileName(file.getOriginalFilename());
+        photo.setData(file.getBytes());
+        db.put(photo.getId(), photo);
         return photo;
     }
 
