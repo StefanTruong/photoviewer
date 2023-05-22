@@ -75,12 +75,7 @@ public class PhotozController {
                     .then(text => alert(text));
         })();
         */
-        Photo photo = new Photo();
-        photo.setId(UUID.randomUUID().toString());
-        photo.setFileName(file.getOriginalFilename());
-        photo.setData(file.getBytes());
-        photosService.save(photo.getId(), photo);
-        return photo;
+        return photosService.save(file.getOriginalFilename(), file.getBytes());
     }
 
 
