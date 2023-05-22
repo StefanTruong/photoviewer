@@ -1,5 +1,6 @@
 package com.tuorial.stefan.photo.hochzeit;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.lang.NonNull;
 
@@ -9,6 +10,8 @@ public class Photo {
     @NotEmpty
     private String fileName;
 
+    @JsonIgnore
+    // will not be seen as it will be ignored when the object is converted to json on the html page
     private byte[] data;
 
     public Photo() {
