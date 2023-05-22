@@ -12,10 +12,13 @@ import java.util.*;
 @RestController
 public class PhotozController {
 
-    private Map<String, Photo> db = new HashMap<>(){{
-        put("1", new Photo("1", "photo1.jpg"));
-    }};
+    private final PhotosService photosService;
 
+    public PhotozController(PhotosService photosService) {
+        // Hint @Autowired at the variable photosService can replace the Constructor Injection
+        this.photosService = photosService;
+    }
+    // do not use this. db will be handled in the PhotosService
     private List<Photo> db_old = List.of(
             new Photo("1", "photo1.jpg"));
 
@@ -26,12 +29,12 @@ public class PhotozController {
 
     @GetMapping("/photo/")
     public Collection<Photo> get(){
-        return db.values();
+        return photosService.get();
     }
 
     @GetMapping("/photo/{id}")
     public Photo get(@PathVariable String id){
-        Photo photo = db.get(id);
+        Photo photo = photosService.get(id);
         if(photo == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -47,14 +50,15 @@ public class PhotozController {
           await fetch("http://localhost:8080/photo/" + id, {method: "DELETE"})
           })("1")
          */
-        Photo photo = db.remove(id);
+        Photo photo = photosService.remove(id);
         if(photo == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PostMapping("/photoOld/")
-    public Photo create(@RequestBody @Validated Photo photo){
+
+    @PostMapping("/photo/")
+    public Photo create(@RequestPart("data") MultipartFile file) throws IOException {
         /*
         (async function createPhoto() {
           let photo = {"fileName": "post.jpg"};
@@ -70,22 +74,12 @@ public class PhotozController {
                     .then(result => result.text())
                     .then(text => alert(text));
         })();
-         */
-
-        photo.setId(UUID.randomUUID().toString());
-        System.out.println("Hallo" + photo.getClass().getName());
-        db.put(photo.getId(), photo);
-
-        return photo;
-    }
-
-    @PostMapping("/photo/")
-    public Photo create(@RequestPart("data") MultipartFile file) throws IOException {
+        */
         Photo photo = new Photo();
         photo.setId(UUID.randomUUID().toString());
         photo.setFileName(file.getOriginalFilename());
         photo.setData(file.getBytes());
-        db.put(photo.getId(), photo);
+        photosService.save(photo.getId(), photo);
         return photo;
     }
 
