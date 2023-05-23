@@ -1,7 +1,8 @@
-package com.tuorial.stefan.photo.hochzeit;
+package com.tuorial.stefan.photo.hochzeit.web;
 
+import com.tuorial.stefan.photo.hochzeit.model.Photo;
+import com.tuorial.stefan.photo.hochzeit.service.PhotosService;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;

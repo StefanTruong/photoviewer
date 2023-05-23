@@ -1,4 +1,4 @@
-package com.tuorial.stefan.photo.hochzeit;
+package com.tuorial.stefan.photo.hochzeit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;

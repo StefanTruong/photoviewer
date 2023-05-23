@@ -1,5 +1,7 @@
-package com.tuorial.stefan.photo.hochzeit;
+package com.tuorial.stefan.photo.hochzeit.web;
 
+import com.tuorial.stefan.photo.hochzeit.model.Photo;
+import com.tuorial.stefan.photo.hochzeit.service.PhotosService;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

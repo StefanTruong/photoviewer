@@ -1,5 +1,6 @@
-package com.tuorial.stefan.photo.hochzeit;
+package com.tuorial.stefan.photo.hochzeit.service;
 
+import com.tuorial.stefan.photo.hochzeit.model.Photo;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
