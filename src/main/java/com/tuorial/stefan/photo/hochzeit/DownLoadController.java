@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class DownLoadController {
@@ -19,8 +20,14 @@ public class DownLoadController {
 
     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> download(@PathVariable String id){
-        byte[] data = new byte[0];
+
+        Photo photo = photosService.get(id);
+        if (photo == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+
+        byte[] data = photo.getData();
         HttpHeaders headers = new HttpHeaders();
+        headers.set();
 
         return new ResponseEntity<>(data, headers, HttpStatus.OK);
     }

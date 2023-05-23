@@ -10,6 +10,8 @@ public class Photo {
     @NotEmpty
     private String fileName;
 
+    private String contentType;
+
     @JsonIgnore
     // will not be seen as it will be ignored when the object is converted to json on the html page
     private byte[] data;
@@ -24,6 +26,14 @@ public class Photo {
 
     public String getId() {
         return id;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     public String getFileName() {
