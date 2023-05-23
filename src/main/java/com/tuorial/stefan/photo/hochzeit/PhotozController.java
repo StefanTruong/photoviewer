@@ -75,7 +75,7 @@ public class PhotozController {
                     .then(text => alert(text));
         })();
         */
-        return photosService.save(file.getOriginalFilename(), file.getBytes());
+        return photosService.save(file.getOriginalFilename(), file.getContentType(), file.getBytes());
     }
 
 
